@@ -23,23 +23,24 @@ async function Page({
   const result = await fetchCommunities({
     searchTerm: searchParams.q,
     pageNumber: searchParams?.page ? +searchParams.page : 1,
-    pageSize: 25,
+    pageSize: 25, // You might want to adjust this number depending on your layout requirements
   });
 
   return (
     <>
-      <h1 className="head-text">Communities</h1>
+      <div className="py-24 px-6">
+        <h1 className="head-text">Communities</h1>
 
-      <div className="mt-5">
-        <Searchbar routeType="communities" />
-      </div>
+        <div className="mt-5">
+          <Searchbar routeType="communities" />
+        </div>
 
-      <section className="mt-9 flex flex-wrap gap-4">
-        {result.communities.length === 0 ? (
-          <p className="no-result">No communities found</p>
-        ) : (
-          <>
-            {result.communities.map((community) => (
+        {/* Changed section: Adjusting container for a 3-column grid with space-x-3 */}
+        <section className="mt-9 grid grid-cols-2 gap-x-3 gap-y-4">
+          {result.communities.length === 0 ? (
+            <p className="no-result">No communities found</p>
+          ) : (
+            result.communities.map((community) => (
               <CommunityCard
                 key={community.id}
                 id={community.id}
@@ -49,16 +50,16 @@ async function Page({
                 bio={community.bio}
                 members={community.members}
               />
-            ))}
-          </>
-        )}
-      </section>
+            ))
+          )}
+        </section>
 
-      <Pagination
-        path="communities"
-        pageNumber={searchParams?.page ? +searchParams.page : 1}
-        isNext={result.isNext}
-      />
+        <Pagination
+          path="communities"
+          pageNumber={searchParams?.page ? +searchParams.page : 1}
+          isNext={result.isNext}
+        />
+      </div>
     </>
   );
 }

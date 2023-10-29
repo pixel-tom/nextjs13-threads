@@ -18,105 +18,105 @@ const config: Config = {
     },
     fontSize: {
       "heading1-bold": [
-        "36px",
+        "32px",
         {
           lineHeight: "140%",
           fontWeight: "700",
         },
       ],
       "heading1-semibold": [
-        "36px",
+        "32px",
         {
           lineHeight: "140%",
           fontWeight: "600",
         },
       ],
       "heading2-bold": [
-        "30px",
+        "28px",
         {
           lineHeight: "140%",
           fontWeight: "700",
         },
       ],
       "heading2-semibold": [
-        "30px",
+        "28px",
         {
           lineHeight: "140%",
           fontWeight: "600",
         },
       ],
       "heading3-bold": [
-        "24px",
+        "20px",
         {
           lineHeight: "140%",
           fontWeight: "700",
         },
       ],
       "heading4-medium": [
-        "20px",
+        "16px",
         {
           lineHeight: "140%",
           fontWeight: "500",
         },
       ],
       "body-bold": [
-        "18px",
+        "16px",
         {
           lineHeight: "140%",
           fontWeight: "700",
         },
       ],
       "body-semibold": [
-        "18px",
+        "14px",
         {
           lineHeight: "140%",
           fontWeight: "600",
         },
       ],
       "body-medium": [
-        "18px",
+        "14px",
         {
           lineHeight: "140%",
           fontWeight: "500",
         },
       ],
       "body-normal": [
-        "18px",
+        "14px",
         {
           lineHeight: "140%",
           fontWeight: "400",
         },
       ],
       "body1-bold": [
-        "18px",
+        "14px",
         {
           lineHeight: "140%",
           fontWeight: "700",
         },
       ],
       "base-regular": [
-        "16px",
+        "12px",
         {
           lineHeight: "140%",
           fontWeight: "400",
         },
       ],
       "base-medium": [
-        "16px",
+        "12px",
         {
           lineHeight: "140%",
           fontWeight: "500",
         },
       ],
       "base-semibold": [
-        "16px",
+        "12px",
         {
           lineHeight: "140%",
           fontWeight: "600",
         },
       ],
       "base1-semibold": [
-        "16px",
+        "12px",
         {
           lineHeight: "140%",
           fontWeight: "600",
@@ -174,7 +174,7 @@ const config: Config = {
     },
     extend: {
       colors: {
-        "primary-500": "#877EFF",
+        "primary-500": "#E44D26",
         "secondary-500": "#FFB620",
         blue: "#0095F6",
         "logout-btn": "#FF5A5A",
@@ -185,7 +185,7 @@ const config: Config = {
         "dark-4": "#1F1F22",
         "light-1": "#FFFFFF",
         "light-2": "#EFEFEF",
-        "light-3": "#7878A3",
+        "light-3": "#E44D26",
         "light-4": "#5C5C7B",
         "gray-1": "#697C89",
         glassmorphism: "rgba(16, 16, 18, 0.60)",

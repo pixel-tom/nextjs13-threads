@@ -37,6 +37,7 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
   image: String,
+  bannerImage: String,
   bio: String,
   followers: [followerSchema],
   following: [followerSchema],

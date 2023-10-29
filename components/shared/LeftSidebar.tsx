@@ -14,8 +14,8 @@ const LeftSidebar = () => {
   const { userId } = useAuth();
 
   return (
-    <section className="custom-scrollbar leftsidebar">
-      <div className="flex w-full flex-1 flex-col gap-6 px-6">
+    <section className="custom-scrollbar leftsidebar bg-dark-1">
+      <div className="flex w-full flex-1 flex-col gap-2 px-8">
         {sidebarLinks.map((link) => {
           const isActive =
             (pathname.includes(link.route) && link.route.length > 1) ||
@@ -32,11 +32,11 @@ const LeftSidebar = () => {
               <Image
                 src={link.imgURL}
                 alt={link.label}
-                width={24}
-                height={24}
+                width={20}
+                height={20}
               />
 
-              <p className="text-light-1 max-lg:hidden">{link.label}</p>
+              <p className="text-light-1 text-small-regular max-lg:hidden">{link.label}</p>
             </Link>
           );
         })}

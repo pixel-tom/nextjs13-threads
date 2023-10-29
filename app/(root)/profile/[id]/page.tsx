@@ -15,6 +15,8 @@ import {
 } from "@/lib/actions/user.actions";
 import UserCard from "@/components/cards/UserCard";
 
+import Carousel from 'react-bootstrap/Carousel';
+
 async function Page({ params }: { params: { id: string } }) {
   const user = await currentUser();
   if (!user) return null;
@@ -28,17 +30,28 @@ async function Page({ params }: { params: { id: string } }) {
   const isFollowing = await isUserFollowing(user.id, params.id);
 
   return (
-    <section>
-      <ProfileHeader
-        accountId={userInfo.id}
-        authUserId={user.id}
-        name={userInfo.name}
-        username={userInfo.username}
-        imgUrl={userInfo.image}
-        bio={userInfo.bio}
-        isFollowing={isFollowing}
-      />
-
+    <section className="py-20 px-6">
+      <div className="w-full">
+        <div className="relative w-full h-full pb-1/3">
+          <Image
+            src={"/assets/banner.png"}
+            alt={""}
+            layout="fill"
+            objectFit="cover"
+          />
+        </div>
+      </div>
+      <div className="mt-8">
+        <ProfileHeader
+          accountId={userInfo.id}
+          authUserId={user.id}
+          name={userInfo.name}
+          username={userInfo.username}
+          imgUrl={userInfo.image}
+          bio={userInfo.bio}
+          isFollowing={isFollowing}
+        />
+      </div>
       <div className="mt-9">
         <Tabs defaultValue="threads" className="w-full">
           <TabsList className="tab">
@@ -51,7 +64,7 @@ async function Page({ params }: { params: { id: string } }) {
                   height={24}
                   className="object-contain"
                 />
-                <p className="max-sm:hidden">{tab.label}</p>
+                <p className="max-sm:hidden text-tiny-medium">{tab.label}</p>
                 {tab.label === "Threads" && (
                   <p className="ml-1 rounded-sm bg-light-4 px-2 py-1 !text-tiny-medium text-light-2">
                     {userInfo.threadsCount}
@@ -132,4 +145,6 @@ async function Page({ params }: { params: { id: string } }) {
     </section>
   );
 }
+
+
 export default Page;

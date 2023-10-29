@@ -1,5 +1,15 @@
 import mongoose from "mongoose";
 
+export interface CommunityType {
+  id: string;
+  username: string;
+  name: string;
+  image: string;
+  bio: string;
+  createdBy: string;
+}
+
+
 const followerSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,

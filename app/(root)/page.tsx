@@ -1,68 +1,89 @@
+'use client'
+
 import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
-
-import ThreadCard from "@/components/cards/ThreadCard";
-import Pagination from "@/components/shared/Pagination";
-
-import { fetchPosts, getReactionsData } from "@/lib/actions/thread.actions";
 import { fetchUser } from "@/lib/actions/user.actions";
+import { fetchCommunities } from "@/lib/actions/community.actions";
+import Example from "@/components/sections/HomeSection";
+import CoursesCarousel from "@/components/carousels/CoursesCarousel";
+import CommunityCarousel from "@/components/carousels/CommunityCarousel";
+import { fetchAllCourses } from "@/lib/actions/course.actions";
+import { useEffect, useState } from "react";
+import { CourseType } from "@/lib/models/course.model";
+import Community from "@/lib/models/community.model";
+import HomeSection from "@/components/sections/HomeSection";
 
-async function Home({
+function Home({
   searchParams,
 }: {
   searchParams: { [key: string]: string | undefined };
 }) {
-  const user = await currentUser();
-  if (!user) return null;
+  const [courses, setCourses] = useState<CourseType[]>([]);
+  const [communities, setCommunities] = useState<Community[]>([]);
 
-  const userInfo = await fetchUser(user.id);
-  if (!userInfo?.onboarded) redirect("/onboarding");
+  useEffect(() => {
+    const loadCourses = async () => {
+      try {
+        const courseList = await fetchAllCourses();
+        setCourses(courseList);
+      } catch (error) {
+        console.error("An error occurred while fetching courses:", error);
+      }
+    };
 
-  const result = await fetchPosts(
-    searchParams.page ? +searchParams.page : 1,
-    30
-  );
+    const loadCommunities = async () => {
+      try {
+        const result = await fetchCommunities({
+          searchTerm: searchParams.q,
+          pageNumber: searchParams?.page ? +searchParams.page : 1,
+          pageSize: 25,
+        });
+        setCommunities(result.communities);
+        console.log(communities);
+      } catch (error) {
+        console.error("An error occurred while fetching communities:", error);
+      }
+    };
 
-  const reactionsData = await getReactionsData({
-    userId: userInfo._id,
-    posts: result.posts,
-  });
-
-  const { childrenReactions, childrenReactionState } = reactionsData;
+    loadCourses();
+    loadCommunities();
+  }, []);
 
   return (
     <>
-      <h1 className="head-text text-left">Home</h1>
+      <section className="pb-24 py-18">
+        <div className="py-5">
+          <HomeSection />
+        </div>
 
-      <section className="mt-9 flex flex-col gap-10">
-        {result.posts.length === 0 ? (
-          <p className="no-result">No threads found</p>
-        ) : (
-          <>
-            {result.posts.map((post, idx) => (
-              <ThreadCard
-                key={post._id}
-                id={post._id}
-                currentUserId={user.id}
-                parentId={post.parentId}
-                content={post.text}
-                author={post.author}
-                community={post.community}
-                createdAt={post.createdAt}
-                comments={post.children}
-                reactions={childrenReactions[idx].users}
-                reactState={childrenReactionState[idx]}
-              />
-            ))}
-          </>
-        )}
+        <h1 className="px-10 my-3 text-light-1 text-heading3-bold">
+          Popular Communities
+        </h1>
+
+        <section>
+        {communities.length === 0 ? (
+            <p className="no-result">No communities found</p>
+          ) : (
+            <div className="px-10">
+              <CommunityCarousel communities={communities} />
+            </div>
+          )}
+        </section>
+
+        <h1 className="px-10 mb-3 mt-8 text-light-1 text-heading3-bold">
+          Popular Courses
+        </h1>
+
+        <section className="">
+          {courses.length === 0 ? (
+            <p className="no-result">No communities found</p>
+          ) : (
+            <div className="px-10">
+              <CoursesCarousel courses={courses} />
+            </div>
+          )}
+        </section>
       </section>
-
-      <Pagination
-        path="/"
-        pageNumber={searchParams?.page ? +searchParams.page : 1}
-        isNext={result.isNext}
-      />
     </>
   );
 }
